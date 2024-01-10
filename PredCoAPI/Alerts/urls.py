@@ -17,8 +17,5 @@ urlpatterns = [
 
     path("create-job/<str:device_id>/", CreateJobView.as_view(), name='create-job'),
     path("update-status/<str:alert_id>/<str:alert_status>/", UpdateStatusView.as_view(), name='update-status'),
-    path("update-geofence-alert-status/<str:alert_id>/<str:alert_status>/", UpdateGeofenceAlertStatusView.as_view(), name='update-geofence-alert-status'),
-    path('update-watcher/<str:action>/<str:watcher_id>/', UpdateWatcherView.as_view(), name='update-watcher'),
-
     path('create-datagap-watcher/<str:device_id>/', CreateMissingDataJob.as_view(), name='create-datagap-watcher'),
 ]

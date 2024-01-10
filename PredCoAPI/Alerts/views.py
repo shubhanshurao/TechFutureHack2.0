@@ -17,7 +17,6 @@ from sms import SendSMS
 
 from Alerts.serializers import *
 from Users.serializers import RoleSerializer
-from Geofencing.models import *
 from .serializers import *
 
 load_dotenv()
@@ -248,8 +247,6 @@ class GetUsers(APIView):
         elif source_type=='usecase': 
             source = UseCases.objects.get(ID=source_id)
             roles = Role.objects.filter(Organization=source.Division.Organization)
-        elif source_type=='geofence':
-            source = Asset.objects.get(ID=source_id)
             roles = Role.objects.filter(Organization=source.Organization)
         elif source_type=='device':
             source = Device.objects.get(ID=source_id)
@@ -454,21 +451,7 @@ class CreateWatcherView(APIView):
 
         return Response(response, status=status.HTTP_200_OK)
 
-class UpdateWatcherView(APIView):
-    def get(self, request, action, watcher_id):
-        data = request.GET
-        if data.get('is_geofence'):
-            source = Geofence.objects.get(ID=watcher_id)
-        else:
-            source = Watcher.objects.get(ID=watcher_id)
 
-        source.Active = False if action=='_deactivate' else True
-        source.save()
-
-        endpoint = f"/_watcher/watch/{source.Watcher_id}/{action}"
-    
-        response = send_request(endpoint, put_=True)
-        return Response(response, status=status.HTTP_200_OK)
 
 class GetWatchers(APIView):
     def get(self, request, division_id, format=None):
@@ -640,11 +623,3 @@ class UpdateStatusView(APIView):
 
         return Response({"message": "done"}, status=status.HTTP_200_OK)
 
-class UpdateGeofenceAlertStatusView(APIView):
-    def get(self, request, alert_id, alert_status, format=None):
-        alert = GeofenceAlert.objects.get(ID = alert_id)
-
-        alert.Status = alert_status
-        alert.save(update_fields=['status'])
-
-        return Response({"message": "done"}, status=status.HTTP_200_OK)
