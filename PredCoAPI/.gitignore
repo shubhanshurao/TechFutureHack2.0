@@ -1,0 +1,29 @@
+# database to ignore 
+*.sqlite3
+
+# virtual environment
+venv/
+predco/
+
+# static files
+assets/
+
+#Dotenv file
+.env
+
+__pycache__/
+
+# Backend/migrations/*
+# !Backend/migrations/__init__.py
+
+# Inventory/migrations/*
+# !Inventory/migrations/__init__.py
+
+# certificate files
+*.crt
+*.key
+*.pem
+# .dockerignore
+
+# Firebase credentials
+predco-app-firebase-adminsdk.json
