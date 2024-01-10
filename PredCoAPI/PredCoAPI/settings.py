@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'Usecases',
     'Alerts',
     'Users',
-    'JoinReq'
+    'JoinReq',
+    'DigitalTwin'
 
 ]
 

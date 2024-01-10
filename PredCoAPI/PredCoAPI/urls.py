@@ -33,5 +33,6 @@ urlpatterns = [
     path('Alerts/', include('Alerts.urls')),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('Onboarding/', include('JoinReq.urls')),
+    path('Digital-Twin/', include('DigitalTwin.urls')),
 
 ]
