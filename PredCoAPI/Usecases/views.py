@@ -78,6 +78,7 @@ class ViewUseCases(APIView):
             usecases = UseCases.objects.filter(Division=div)
 
             _uses = []
+            total = 0
             for use in usecases:
                 _uses.append({
                     'details': UsecaseSerializers(use).data,
@@ -85,8 +86,9 @@ class ViewUseCases(APIView):
                     'watchers': len(Watcher.objects.filter(Device__UseCase=use)),
                     'alerts': len(Alert.objects.filter(Watcher__Device__UseCase=use))
                 })
+                total += len(Device.objects.filter(UseCase=use))
 
-            return Response({'usecases': _uses}, status=status.HTTP_200_OK)
+            return Response({'usecases': _uses, 'devices': total}, status=status.HTTP_200_OK)
 
         except Division.DoesNotExist:
             return Response({'message': 'Unable to find Division'}, status=status.HTTP_404_NOT_FOUND)
